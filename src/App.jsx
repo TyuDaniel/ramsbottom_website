@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import galleryImages from 'virtual:gallery-images'
 import './App.css'
 
 /* ============================================
@@ -16,24 +17,7 @@ const teamMembers = [
   { name: 'Rich', nickname: 'The most integral cog in the whole operation', image: '/media/Rich.jpeg' },
 ]
 
-const socialPosts = [
-  { image: '/media/social1.png', caption: 'Great night at Ramsbottom\'s' },
-  { image: '/media/social2.png', caption: 'The craic was mighty' },
-  { image: '/media/social3.png', caption: 'Live music sessions' },
-  { image: '/media/social4.png', caption: 'Good times with great people' },
-]
 
-const openingHours = [
-  { day: 'Monday', hours: '10:30 am – 11:30 pm' },
-  { day: 'Tuesday', hours: '10:30 am – 11:30 pm' },
-  { day: 'Wednesday', hours: '10:30 am – 11:30 pm' },
-  { day: 'Thursday', hours: '10:30 am – 11:30 pm' },
-  { day: 'Friday', hours: '10:30 am – 12:30 am' },
-  { day: 'Saturday', hours: '10:30 am – 12:30 am' },
-  { day: 'Sunday', hours: '12:00 pm – 11:00 pm' },
-]
-
-const enquiryTypes = ['General Enquiries', 'Events', 'Parties', 'Live Music']
 
 /* ============================================
    SVG ICONS
@@ -115,6 +99,7 @@ function Navbar() {
         <div className={`navbar-links ${menuOpen ? 'open' : ''}`}>
           <button className="nav-link-btn" onClick={() => nav('about')}>About</button>
           <button className="nav-link-btn" onClick={() => nav('team')}>The Team</button>
+          <button className="nav-link-btn" onClick={() => nav('gallery')}>Gallery</button>
           <button className="nav-link-btn" onClick={() => nav('laois')}>Things to Do</button>
           <button className="nav-link-btn" onClick={() => nav('contact')}>Contact</button>
         </div>
@@ -143,8 +128,7 @@ function Navbar() {
 function App() {
   useGlobalReveal()
 
-  const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-  const today = days[new Date().getDay()]
+  const [lightbox, setLightbox] = useState(null)
 
   const [form, setForm] = useState({ name: '', email: '', enquiryType: '', message: '' })
   const [submitted, setSubmitted] = useState(false)
@@ -237,6 +221,38 @@ function App() {
         </div>
       </section>
 
+      {/* ── GALLERY ── */}
+      <section className="gallery-section" id="gallery">
+        <div className="section-inner">
+          <div className="section-header">
+            <h2 className="section-title reveal">Our <span className="gold">Gallery</span></h2>
+            <div className="section-divider reveal reveal-delay-1"></div>
+            <p className="section-subtitle reveal reveal-delay-2">Moments from Ramsbottom's — where every night tells a story</p>
+          </div>
+        </div>
+        <div className="gallery-grid">
+          {galleryImages.map((src, i) => (
+            <div key={i} className={`gallery-item${[0, 7].includes(i) ? ' featured' : ''} reveal reveal-delay-${(i % 5) + 1}`} onClick={() => setLightbox(i)}>
+              <img src={src} alt={`Gallery ${i + 1}`} loading="lazy" />
+              <div className="gallery-item-overlay">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                </svg>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {lightbox !== null && (
+          <div className="lightbox" onClick={() => setLightbox(null)}>
+            <button className="lightbox-close" onClick={() => setLightbox(null)}>✕</button>
+            <button className="lightbox-prev" onClick={(e) => { e.stopPropagation(); setLightbox((lightbox - 1 + galleryImages.length) % galleryImages.length) }}>‹</button>
+            <img src={galleryImages[lightbox]} alt="" onClick={(e) => e.stopPropagation()} />
+            <button className="lightbox-next" onClick={(e) => { e.stopPropagation(); setLightbox((lightbox + 1) % galleryImages.length) }}>›</button>
+          </div>
+        )}
+      </section>
+
       {/* ── THINGS TO DO ── */}
       <section className="laois-section" id="laois">
         <div className="section-inner">
@@ -257,7 +273,7 @@ function App() {
         <div className="contact-inner">
           <div className="contact-heading reveal">
             <h2 className="contact-title">Let's <span className="contact-title-gold">Talk.</span></h2>
-            <p className="contact-subtitle">Drop us a message — we'd love to hear from you.</p>
+            <p className="contact-subtitle">Drop us a message we'd love to hear from you.</p>
           </div>
 
           <div className="contact-body">

@@ -530,6 +530,145 @@
   fill: white;
 }
 
+/* ── GALLERY ── */
+.gallery-section {
+  background: var(--bg-raised);
+  padding: var(--sp-3xl) 0;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 220px;
+  grid-auto-flow: dense;
+  gap: 8px;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--sp-xl) var(--sp-xl);
+}
+
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  background: var(--bg-card);
+}
+
+.gallery-item.featured {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+  display: block;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.06);
+}
+
+.gallery-item-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease;
+}
+
+.gallery-item-overlay svg {
+  width: 32px;
+  height: 32px;
+  color: white;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.6));
+}
+
+.gallery-item:hover .gallery-item-overlay {
+  background: rgba(0, 0, 0, 0.38);
+}
+
+.gallery-item:hover .gallery-item-overlay svg {
+  opacity: 1;
+}
+
+/* Lightbox */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.93);
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--sp-xl);
+}
+
+.lightbox img {
+  max-width: 90vw;
+  max-height: 88vh;
+  object-fit: contain;
+  border-radius: var(--r-md);
+  box-shadow: 0 20px 80px rgba(0, 0, 0, 0.8);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 28px;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 1.8rem;
+  cursor: pointer;
+  transition: color var(--t-fast);
+  z-index: 1;
+  line-height: 1;
+  padding: 0;
+}
+
+.lightbox-close:hover {
+  color: var(--gold);
+}
+
+.lightbox-prev,
+.lightbox-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: white;
+  font-size: 2.5rem;
+  width: 54px;
+  height: 54px;
+  border-radius: var(--r-full);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--t-base);
+  line-height: 1;
+  padding: 0 0 3px;
+}
+
+.lightbox-prev { left: 20px; }
+.lightbox-next { right: 20px; }
+
+.lightbox-prev:hover,
+.lightbox-next:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--green-dark);
+}
+
 /* ── THINGS TO DO ── */
 .laois-section {
   background: var(--bg);
@@ -1000,6 +1139,11 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
+  .gallery-grid {
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 180px;
+  }
+
   .hours-grid {
     grid-template-columns: repeat(4, 1fr);
   }
@@ -1093,6 +1237,14 @@
 
   .contact-form {
     padding: var(--sp-xl);
+  }
+}
+
+@media (max-width: 600px) {
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 150px;
+    gap: 4px;
   }
 }
 
