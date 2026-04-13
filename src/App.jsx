@@ -130,13 +130,14 @@ function App() {
 
   const [lightbox, setLightbox] = useState(null)
 
-  const [form, setForm] = useState({ name: '', email: '', enquiryType: '', message: '', botcheck: '' })
+  const [form, setForm] = useState({ name: '', email: '', enquiryType: '', message: '' })
   const [submitted, setSubmitted] = useState(false)
   const [sending, setSending] = useState(false)
   const [sendError, setSendError] = useState(false)
   const handleChange = (e) => setForm(p => ({ ...p, [e.target.name]: e.target.value }))
   const handleSubmit = async (e) => {
     e.preventDefault()
+    if (submitted) return
     setSending(true)
     setSendError(false)
     try {
@@ -144,7 +145,7 @@ function App() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          access_key: 'ecf570c6-8d42-4e07-802d-e2854576ed34',
+          access_key: '3b9fb2fe-1b41-40cf-83bf-9068779a6b36',
           subject: `Ramsbottom's Website — ${form.enquiryType || 'General Enquiry'}`,
           from_name: form.name,
           replyto: form.email,
@@ -152,7 +153,6 @@ function App() {
           email: form.email,
           enquiry_type: form.enquiryType,
           message: form.message,
-          botcheck: form.botcheck,
         }),
       })
       const data = await res.json()
@@ -339,7 +339,6 @@ function App() {
                 </div>
               ) : (
                 <form className="contact-form-grid" onSubmit={handleSubmit}>
-                  <input type="checkbox" name="botcheck" className="hidden" style={{ display: 'none' }} onChange={handleChange} />
                   <div className="form-row">
                     <div className="form-field">
                       <input className="field-input" type="text" name="name"
@@ -355,8 +354,8 @@ function App() {
                       placeholder="What's on your mind?" value={form.message} onChange={handleChange} required />
                   </div>
                   {sendError && <p className="form-error">Something went wrong. Please try again.</p>}
-                  <button type="submit" className="shimmer-btn" disabled={sending}>
-                    <span>{sending ? 'Sending…' : 'Send Message'}</span>
+                  <button type="submit" className="shimmer-btn" disabled={sending || submitted}>
+                    <span>{submitted ? 'Already Submitted!' : sending ? 'Sending…' : 'Send Message'}</span>
                   </button>
                 </form>
               )}
