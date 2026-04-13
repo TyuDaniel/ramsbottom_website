@@ -130,14 +130,42 @@ function App() {
 
   const [lightbox, setLightbox] = useState(null)
 
-  const [form, setForm] = useState({ name: '', email: '', enquiryType: '', message: '' })
+  const [form, setForm] = useState({ name: '', email: '', enquiryType: '', message: '', botcheck: '' })
   const [submitted, setSubmitted] = useState(false)
+  const [sending, setSending] = useState(false)
+  const [sendError, setSendError] = useState(false)
   const handleChange = (e) => setForm(p => ({ ...p, [e.target.name]: e.target.value }))
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    setSubmitted(true)
-    setTimeout(() => setSubmitted(false), 4000)
-    setForm({ name: '', email: '', enquiryType: '', message: '' })
+    setSending(true)
+    setSendError(false)
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          access_key: 'ecf570c6-8d42-4e07-802d-e2854576ed34',
+          subject: `Ramsbottom's Website — ${form.enquiryType || 'General Enquiry'}`,
+          from_name: form.name,
+          name: form.name,
+          email: form.email,
+          enquiry_type: form.enquiryType,
+          message: form.message,
+        }),
+      })
+      const data = await res.json()
+      if (data.success) {
+        setSubmitted(true)
+        setTimeout(() => setSubmitted(false), 4000)
+        setForm({ name: '', email: '', enquiryType: '', message: '' })
+      } else {
+        setSendError(true)
+      }
+    } catch {
+      setSendError(true)
+    } finally {
+      setSending(false)
+    }
   }
 
   return (
@@ -323,8 +351,9 @@ function App() {
                     <textarea className="field-input field-textarea" name="message"
                       placeholder="What's on your mind?" value={form.message} onChange={handleChange} required />
                   </div>
-                  <button type="submit" className="shimmer-btn">
-                    <span>Send Message</span>
+                  {sendError && <p className="form-error">Something went wrong. Please try again.</p>}
+                  <button type="submit" className="shimmer-btn" disabled={sending}>
+                    <span>{sending ? 'Sending…' : 'Send Message'}</span>
                   </button>
                 </form>
               )}

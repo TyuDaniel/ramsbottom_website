@@ -933,6 +933,17 @@
   left: 150%;
 }
 
+.shimmer-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.form-error {
+  color: #e74c3c;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
 /* Success state */
 .contact-success {
   display: flex;
