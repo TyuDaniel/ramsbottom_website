@@ -147,10 +147,12 @@ function App() {
           access_key: 'ecf570c6-8d42-4e07-802d-e2854576ed34',
           subject: `Ramsbottom's Website — ${form.enquiryType || 'General Enquiry'}`,
           from_name: form.name,
+          replyto: form.email,
           name: form.name,
           email: form.email,
           enquiry_type: form.enquiryType,
           message: form.message,
+          botcheck: form.botcheck,
         }),
       })
       const data = await res.json()
@@ -337,6 +339,7 @@ function App() {
                 </div>
               ) : (
                 <form className="contact-form-grid" onSubmit={handleSubmit}>
+                  <input type="checkbox" name="botcheck" className="hidden" style={{ display: 'none' }} onChange={handleChange} />
                   <div className="form-row">
                     <div className="form-field">
                       <input className="field-input" type="text" name="name"
