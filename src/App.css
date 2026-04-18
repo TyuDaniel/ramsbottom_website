@@ -675,21 +675,69 @@
   padding: var(--sp-4xl) 0;
 }
 
-
-.laois-placeholder {
-  text-align: center;
-}
-
-.laois-placeholder .placeholder-icon {
-  font-size: 3.5rem;
-  margin-bottom: var(--sp-lg);
-  opacity: 0.35;
-}
-
-.laois-placeholder p {
-  color: var(--text-muted);
-  max-width: 480px;
+.laois-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--sp-lg);
+  padding: 0 var(--sp-xl) var(--sp-xl);
+  max-width: var(--max-w);
   margin: 0 auto;
+}
+
+.laois-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: var(--sp-xl) var(--sp-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-md);
+  transition: all 0.35s ease;
+}
+
+.laois-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--gold);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(200, 146, 42, 0.15);
+  background: var(--bg-card-hover);
+}
+
+.laois-card-icon {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.laois-card-name {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--text);
+  line-height: 1.3;
+  margin: 0;
+}
+
+.laois-card-desc {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  line-height: 1.7;
+  margin: 0;
+}
+
+@media (max-width: 1100px) {
+  .laois-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .laois-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .laois-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ── CONTACT ── */

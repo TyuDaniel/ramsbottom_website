@@ -6,6 +6,19 @@ import './App.css'
    DATA
    ============================================ */
 
+const laoisAttractions = [
+  { name: 'Glamping Under the Stars', icon: '⛺', description: 'Sleep out under the open sky somewhere quiet in Laois. Good for a night or two away without going too far.' },
+  { name: 'Ballykilcavan Brewery', icon: '🍺', description: 'A working farm that also brews its own beer. Worth a visit to see how it all comes together and try a few while you\'re there.' },
+  { name: 'Ballintubbert House & Gardens', icon: '🌿', description: 'A fine old house with well-kept walled gardens. Nice spot for a walk on a good day, and not too many people know about it.' },
+  { name: 'Paddleworks', icon: '🛶', description: 'Kayaking and paddleboarding on the rivers and lakes around the midlands. Good fun whether you know what you\'re doing or not.' },
+  { name: 'Laois Forest School', icon: '🌲', description: 'Outdoor learning for kids and adults in the woods. Fires, crafts, foraging, that sort of thing. Great for families.' },
+  { name: 'Glenbarrow Saunas', icon: '🧖', description: 'Wood-fired outdoor saunas up in the Slieve Blooms. Exactly what you need after a long walk, or just a long week.' },
+  { name: 'The Falls at Glenbarrow', icon: '💧', description: 'An easy enough walk through the Slieve Bloom Mountains to a proper waterfall. Well worth the trip on a clear day.' },
+  { name: 'Rock of Dunamaise', icon: '🏰', description: 'The ruins of an old castle on a hill just outside Portlaoise. Good views all around and a bit of history to go with it.' },
+  { name: 'Sheeran Tours', icon: '🗺️', description: 'Guided tours of the county with someone who actually knows the place. Far better than reading about it on a sign.' },
+  { name: 'Solas Eco Garden', icon: '🌻', description: 'A community garden in Portarlington growing food and flowers together. A calm spot, and the people there are great.' },
+]
+
 const teamMembers = [
   { name: 'Jack', nickname: 'II Commandiatore', image: '/media/Jack.jpeg' },
   { name: 'Ann', nickname: 'Her Grace', image: '/media/Anne.jpeg' },
@@ -209,7 +222,7 @@ function App() {
             </p>
           </div>
           <div className="about-image reveal reveal-delay-2">
-            <img src="/media/Anne_Jack.jpeg" alt="Ramsbottom's Pub" />
+            <img src="/media/black and white.jpeg" alt="Ramsbottom's Pub" />
           </div>
         </div>
       </section>
@@ -289,10 +302,18 @@ function App() {
           <div className="section-header">
             <h2 className="section-title reveal">Things to Do in <span className="gold">Laois</span></h2>
             <div className="section-divider reveal reveal-delay-1"></div>
+            <p className="section-subtitle reveal reveal-delay-2">Some of our favourite things to do nearby while you're in the area</p>
           </div>
-          <div className="laois-placeholder">
-            <div className="placeholder-icon reveal">🏰</div>
-            <p className="reveal reveal-delay-1">We're putting together the best spots, walks, and hidden gems in Laois. Check back soon!</p>
+          <div className="laois-grid">
+            {laoisAttractions.map((item, i) => (
+              <div key={item.name} className={`laois-card reveal reveal-delay-${(i % 5) + 1}`}>
+                <div className="laois-card-icon">{item.icon}</div>
+                <div className="laois-card-body">
+                  <h3 className="laois-card-name">{item.name}</h3>
+                  <p className="laois-card-desc">{item.description}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
