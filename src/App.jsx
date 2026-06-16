@@ -7,16 +7,16 @@ import './App.css'
    ============================================ */
 
 const laoisAttractions = [
-  { name: 'Glamping Under the Stars', icon: '⛺', description: 'Sleep out under the open sky somewhere quiet in Laois. Good for a night or two away without going too far.' },
-  { name: 'Ballykilcavan Brewery', icon: '🍺', description: 'A working farm that also brews its own beer. Worth a visit to see how it all comes together and try a few while you\'re there.' },
-  { name: 'Ballintubbert House & Gardens', icon: '🌿', description: 'A fine old house with well-kept walled gardens. Nice spot for a walk on a good day, and not too many people know about it.' },
-  { name: 'Paddleworks', icon: '🛶', description: 'Kayaking and paddleboarding on the rivers and lakes around the midlands. Good fun whether you know what you\'re doing or not.' },
-  { name: 'Laois Forest School', icon: '🌲', description: 'Outdoor learning for kids and adults in the woods. Fires, crafts, foraging, that sort of thing. Great for families.' },
-  { name: 'Glenbarrow Saunas', icon: '🧖', description: 'Wood-fired outdoor saunas up in the Slieve Blooms. Exactly what you need after a long walk, or just a long week.' },
-  { name: 'The Falls at Glenbarrow', icon: '💧', description: 'An easy enough walk through the Slieve Bloom Mountains to a proper waterfall. Well worth the trip on a clear day.' },
-  { name: 'Rock of Dunamaise', icon: '🏰', description: 'The ruins of an old castle on a hill just outside Portlaoise. Good views all around and a bit of history to go with it.' },
-  { name: 'Sheeran Tours', icon: '🗺️', description: 'Guided tours of the county with someone who actually knows the place. Far better than reading about it on a sign.' },
-  { name: 'Solas Eco Garden', icon: '🌻', description: 'A community garden in Portarlington growing food and flowers together. A calm spot, and the people there are great.' },
+  { name: 'Glamping Under the Stars', icon: '⛺', url: 'https://www.glampingunderthestars.ie/', description: 'Sleep out under the open sky somewhere quiet in Laois. Good for a night or two away without going too far.' },
+  { name: 'Ballykilcavan Brewery', icon: '🍺', url: 'https://www.ballykilcavan.com/', description: 'A working farm that also brews its own beer. Worth a visit to see how it all comes together and try a few while you\'re there.' },
+  { name: 'Ballintubbert House & Gardens', icon: '🌿', url: 'https://www.ballintubbert.com/', description: 'A fine old house with well-kept walled gardens. Nice spot for a walk on a good day, and not too many people know about it.' },
+  { name: 'Paddleworks', icon: '🛶', url: 'https://paddleworks.ie/?utm_source=laoistourism.ie&utm_medium=partnership&utm_campaign=laois_tourism', description: 'Kayaking and paddleboarding on the rivers and lakes around the midlands. Good fun whether you know what you\'re doing or not.' },
+  { name: 'Laois Forest School', icon: '🌲', url: 'https://www.laoisforestschool.com/', description: 'Outdoor learning for kids and adults in the woods. Fires, crafts, foraging, that sort of thing. Great for families.' },
+  { name: 'Glenbarrow Saunas', icon: '🧖', url: 'https://barrowsauna.com/', description: 'Wood-fired outdoor saunas up in the Slieve Blooms. Exactly what you need after a long walk, or just a long week.' },
+  { name: 'The Falls at Glenbarrow', icon: '💧', url: 'https://www.facebook.com/p/The-Falls-at-Glenbarrow-100071009475545/', description: 'An easy enough walk through the Slieve Bloom Mountains to a proper waterfall. Well worth the trip on a clear day.' },
+  { name: 'Rock of Dunamaise', icon: '🏰', url: 'https://heritageireland.ie/unguided-sites/rock-of-dunamase/', description: 'The ruins of an old castle on a hill just outside Portlaoise. Good views all around and a bit of history to go with it.' },
+  { name: 'Sheeran Tours', icon: '🗺️', url: 'https://sheerantours.com/', description: 'Guided tours of the county with someone who actually knows the place. Far better than reading about it on a sign.' },
+  { name: 'Solas Eco Garden', icon: '🌻', url: 'https://solaseco.ie', description: 'A community garden in Portarlington growing food and flowers together. A calm spot, and the people there are great.' },
 ]
 
 const teamMembers = [
@@ -27,7 +27,6 @@ const teamMembers = [
   { name: 'Damien', nickname: 'Swiss Army Knife', image: '/media/Damien.jpeg' },
   { name: 'Phillip', nickname: 'The Don', image: '/media/Philip.jpeg' },
   { name: 'Aaron', nickname: 'The Future', image: '/media/Aaron.jpeg' },
-  { name: 'Rich', nickname: 'The most integral cog in the whole operation', image: '/media/Rich.jpeg' },
 ]
 
 
@@ -45,6 +44,13 @@ const FacebookIcon = () => (
 const InstagramIcon = () => (
   <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
     <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+  </svg>
+)
+
+const ExternalLinkIcon = () => (
+  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M7 17L17 7" />
+    <path d="M8 7h9v9" />
   </svg>
 )
 
@@ -111,6 +117,7 @@ function Navbar() {
         {/* Nav links — centred */}
         <div className={`navbar-links ${menuOpen ? 'open' : ''}`}>
           <button className="nav-link-btn" onClick={() => nav('about')}>About</button>
+          <button className="nav-link-btn" onClick={() => nav('history')}>History</button>
           <button className="nav-link-btn" onClick={() => nav('team')}>The Team</button>
           <button className="nav-link-btn" onClick={() => nav('gallery')}>Gallery</button>
           <button className="nav-link-btn" onClick={() => nav('laois')}>Things to Do</button>
@@ -227,6 +234,27 @@ function App() {
         </div>
       </section>
 
+      {/* ── HISTORY ── */}
+      <section className="history-section" id="history">
+        <div className="history-grid">
+          <div className="history-image reveal reveal-delay-1">
+            <img src="/media/Anne_Jack.jpeg" alt="Ramsbottom's history" />
+          </div>
+          <div className="history-text">
+            <h2 className="section-title reveal">Our <span className="gold">History</span></h2>
+            <div className="section-divider reveal reveal-delay-1" style={{ margin: '1rem 0' }}></div>
+            <p className="reveal reveal-delay-2">
+              Ramsbottom's has long been part of Portlaoise life, the kind of place where familiar faces,
+              visiting friends, and passing stories all find their way to the counter.
+            </p>
+            <p className="reveal reveal-delay-3">
+              Through the years, the pub has kept hold of what matters most: a good welcome, a steady pint,
+              and a room that feels easy to settle into.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* ── TEAM (green) ── */}
       <section className="team-section" id="team">
         <div className="section-inner">
@@ -306,13 +334,17 @@ function App() {
           </div>
           <div className="laois-grid">
             {laoisAttractions.map((item, i) => (
-              <div key={item.name} className={`laois-card reveal reveal-delay-${(i % 5) + 1}`}>
+              <a key={item.name} href={item.url} target="_blank" rel="noopener noreferrer" className={`laois-card reveal reveal-delay-${(i % 5) + 1}`}>
                 <div className="laois-card-icon">{item.icon}</div>
                 <div className="laois-card-body">
                   <h3 className="laois-card-name">{item.name}</h3>
                   <p className="laois-card-desc">{item.description}</p>
                 </div>
-              </div>
+                <span className="laois-card-link">
+                  Visit site
+                  <ExternalLinkIcon />
+                </span>
+              </a>
             ))}
           </div>
         </div>
