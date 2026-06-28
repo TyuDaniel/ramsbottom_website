@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import galleryImages from 'virtual:gallery-images'
 import './App.css'
 
 /* ============================================
@@ -20,13 +19,62 @@ const laoisAttractions = [
 ]
 
 const teamMembers = [
-  { name: 'Jack', nickname: 'II Commandiatore', image: '/media/Jack.jpeg' },
-  { name: 'Ann', nickname: 'Her Grace', image: '/media/Anne.jpeg' },
-  { name: 'Billy', nickname: 'Mixmaster General', image: '/media/Billy.jpeg' },
-  { name: 'Noel', nickname: 'Slick Hips', image: '/media/Noel.jpeg' },
-  { name: 'Damien', nickname: 'Swiss Army Knife', image: '/media/Damien.jpeg' },
-  { name: 'Phillip', nickname: 'The Don', image: '/media/Philip.jpeg' },
-  { name: 'Aaron', nickname: 'The Future', image: '/media/Aaron.jpeg' },
+  { name: 'Jack', nickname: 'II Commandiatore', image: '/media/team/jack.webp' },
+  { name: 'Ann', nickname: 'Her Grace', image: '/media/team/ann.webp' },
+  { name: 'Billy', nickname: 'Mixmaster General', image: '/media/team/billy.webp' },
+  { name: 'Noel', nickname: 'Slick Hips', image: '/media/team/noel.webp' },
+  { name: 'Damien', nickname: 'Swiss Army Knife', image: '/media/team/damien.webp' },
+  { name: 'Phillip', nickname: 'The Don', image: '/media/team/philip.webp' },
+  { name: 'Aaron', nickname: 'The Future', image: '/media/team/aaron.webp' },
+]
+
+const galleryCollections = [
+  {
+    title: 'Ramsbottoms',
+    subtitle: 'Nights, faces, and details from the pub',
+    images: [
+      '/media/galleries/ramsbottom/webp/8.webp',
+      '/media/galleries/ramsbottom/webp/9.webp',
+      '/media/galleries/ramsbottom/webp/11.webp',
+      '/media/galleries/ramsbottom/webp/12.webp',
+      '/media/galleries/ramsbottom/webp/13.webp',
+      '/media/galleries/ramsbottom/webp/16.webp',
+      '/media/galleries/ramsbottom/webp/17.webp',
+      '/media/galleries/ramsbottom/webp/20.webp',
+      '/media/galleries/ramsbottom/webp/20(1).webp',
+      '/media/galleries/ramsbottom/webp/21.webp',
+      '/media/galleries/ramsbottom/webp/26.webp',
+      '/media/galleries/ramsbottom/webp/27.webp',
+      '/media/galleries/ramsbottom/webp/28.webp',
+      '/media/galleries/ramsbottom/webp/32.webp',
+    ],
+  },
+  {
+    title: 'Downtown101',
+    subtitle: 'A look inside the Downtown101 collection',
+    images: [
+      '/media/galleries/downtown101/webp/1.webp',
+      '/media/galleries/downtown101/webp/2.webp',
+      '/media/galleries/downtown101/webp/3.webp',
+      '/media/galleries/downtown101/webp/4.webp',
+      '/media/galleries/downtown101/webp/5.webp',
+      '/media/galleries/downtown101/webp/6.webp',
+      '/media/galleries/downtown101/webp/7.webp',
+      '/media/galleries/downtown101/webp/10.webp',
+      '/media/galleries/downtown101/webp/14.webp',
+      '/media/galleries/downtown101/webp/15.webp',
+      '/media/galleries/downtown101/webp/18.webp',
+      '/media/galleries/downtown101/webp/19.webp',
+      '/media/galleries/downtown101/webp/22.webp',
+      '/media/galleries/downtown101/webp/23.webp',
+      '/media/galleries/downtown101/webp/24.webp',
+      '/media/galleries/downtown101/webp/25.webp',
+      '/media/galleries/downtown101/webp/29.webp',
+      '/media/galleries/downtown101/webp/30.webp',
+      '/media/galleries/downtown101/webp/31.webp',
+      '/media/galleries/downtown101/webp/33.webp',
+    ],
+  },
 ]
 
 
@@ -111,7 +159,7 @@ function Navbar() {
       <div className="navbar-inner">
         {/* Logo — left */}
         <a href="#hero" className="navbar-brand" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); setMenuOpen(false) }}>
-          <img src="/media/transparent circular logo.png" alt="Ramsbottom's" className="navbar-logo" />
+          <img src="/media/brand/logo-circle.webp" alt="Ramsbottom's" className="navbar-logo" />
         </a>
 
         {/* Nav links — centred */}
@@ -149,6 +197,22 @@ function App() {
   useGlobalReveal()
 
   const [lightbox, setLightbox] = useState(null)
+  const activeCollection = lightbox !== null ? galleryCollections[lightbox.collectionIndex] : null
+  const activeImage = activeCollection?.images[lightbox.imageIndex]
+  const showPreviousImage = (e) => {
+    e.stopPropagation()
+    setLightbox(({ collectionIndex, imageIndex }) => {
+      const images = galleryCollections[collectionIndex].images
+      return { collectionIndex, imageIndex: (imageIndex - 1 + images.length) % images.length }
+    })
+  }
+  const showNextImage = (e) => {
+    e.stopPropagation()
+    setLightbox(({ collectionIndex, imageIndex }) => {
+      const images = galleryCollections[collectionIndex].images
+      return { collectionIndex, imageIndex: (imageIndex + 1) % images.length }
+    })
+  }
 
   const [form, setForm] = useState({ name: '', email: '', enquiryType: '', message: '' })
   const [submitted, setSubmitted] = useState(false)
@@ -196,13 +260,12 @@ function App() {
 
       {/* ── HERO ── */}
       <section className="hero" id="hero">
-        <video className="hero-video" autoPlay muted loop playsInline preload="auto" poster="/media/Text Logo With green background.png">
-          <source src="/media/landing_video.mov" type="video/quicktime" />
-          <source src="/media/landing_video.mov" type="video/mp4" />
+        <video className="hero-video" autoPlay muted loop playsInline preload="metadata" poster="/media/brand/logo-text-green.webp">
+          <source src="/media/videos/landing-video.mp4" type="video/mp4" />
         </video>
         <div className="hero-overlay"></div>
         <div className="hero-content">
-          <img src="/media/transparent text logo.png" alt="Ramsbottom's" className="hero-text-logo" />
+          <img src="/media/brand/logo-text-transparent.webp" alt="Ramsbottom's" className="hero-text-logo" />
           <p className="hero-tagline">A warm welcome awaits in the heart of Laois</p>
         </div>
         <div className="hero-scroll" onClick={() => scrollTo('about')}>
@@ -221,15 +284,15 @@ function App() {
             <p className="reveal reveal-delay-2">
               Step through our doors and you'll find more than just a pub — you'll find a home away from home.
               Ramsbottom's has been at the heart of the community, bringing people together over great drinks,
-              warm conversation, and unforgettable nights. (placeholder)
+              warm conversation, and unforgettable nights.
             </p>
             <p className="reveal reveal-delay-3">
               Whether you're popping in for a quiet pint, catching the game with friends, or celebrating with
-              family, there's always a seat and a smile waiting for you at Ramsbottom's. (placeholder)
+              family, there's always a seat and a smile waiting for you at Ramsbottom's.
             </p>
           </div>
           <div className="about-image reveal reveal-delay-2">
-            <img src="/media/black and white.jpeg" alt="Ramsbottom's Pub" />
+            <img src="/media/story/pub-black-and-white.webp" alt="Ramsbottom's Pub" />
           </div>
         </div>
       </section>
@@ -238,7 +301,7 @@ function App() {
       <section className="history-section" id="history">
         <div className="history-grid">
           <div className="history-image reveal reveal-delay-1">
-            <img src="/media/Anne_Jack.jpeg" alt="Ramsbottom's history" />
+            <img src="/media/story/anne-jack.webp" alt="Ramsbottom's history" />
           </div>
           <div className="history-text">
             <h2 className="section-title reveal">Our <span className="gold">History</span></h2>
@@ -298,28 +361,47 @@ function App() {
           <div className="section-header">
             <h2 className="section-title reveal">Our <span className="gold">Gallery</span></h2>
             <div className="section-divider reveal reveal-delay-1"></div>
-            <p className="section-subtitle reveal reveal-delay-2">Moments from Ramsbottom's — where every night tells a story</p>
+            <p className="section-subtitle reveal reveal-delay-2">Moments from Ramsbottoms and Downtown101</p>
           </div>
         </div>
-        <div className="gallery-grid">
-          {galleryImages.map((src, i) => (
-            <div key={i} className={`gallery-item${[0, 7].includes(i) ? ' featured' : ''} reveal reveal-delay-${(i % 5) + 1}`} onClick={() => setLightbox(i)}>
-              <img src={src} alt={`Gallery ${i + 1}`} loading="lazy" />
-              <div className="gallery-item-overlay">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
-                </svg>
+        <div className="gallery-collections">
+          {galleryCollections.map((collection, collectionIndex) => (
+            <section key={collection.title} className="gallery-collection" aria-labelledby={`gallery-${collectionIndex}`}>
+              <div className="gallery-collection-header reveal">
+                <div>
+                  <h3 id={`gallery-${collectionIndex}`}>{collection.title}</h3>
+                  <p>{collection.subtitle}</p>
+                </div>
+                <span>{collection.images.length} photos</span>
               </div>
-            </div>
+              <div className="gallery-grid">
+                {collection.images.map((src, imageIndex) => (
+                  <button
+                    key={src}
+                    type="button"
+                    className={`gallery-item reveal reveal-delay-${(imageIndex % 5) + 1}`}
+                    onClick={() => setLightbox({ collectionIndex, imageIndex })}
+                    aria-label={`Open ${collection.title} photo ${imageIndex + 1}`}
+                  >
+                    <img src={src} alt={`${collection.title} ${imageIndex + 1}`} loading="lazy" decoding="async" />
+                    <span className="gallery-item-overlay">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                      </svg>
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </section>
           ))}
         </div>
 
-        {lightbox !== null && (
+        {activeImage && (
           <div className="lightbox" onClick={() => setLightbox(null)}>
             <button className="lightbox-close" onClick={() => setLightbox(null)}>✕</button>
-            <button className="lightbox-prev" onClick={(e) => { e.stopPropagation(); setLightbox((lightbox - 1 + galleryImages.length) % galleryImages.length) }}>‹</button>
-            <img src={galleryImages[lightbox]} alt="" onClick={(e) => e.stopPropagation()} />
-            <button className="lightbox-next" onClick={(e) => { e.stopPropagation(); setLightbox((lightbox + 1) % galleryImages.length) }}>›</button>
+            <button className="lightbox-prev" onClick={showPreviousImage}>‹</button>
+            <img src={activeImage} alt={`${activeCollection.title} ${lightbox.imageIndex + 1}`} onClick={(e) => e.stopPropagation()} />
+            <button className="lightbox-next" onClick={showNextImage}>›</button>
           </div>
         )}
       </section>
@@ -449,7 +531,7 @@ function App() {
       <footer className="footer">
         <div className="footer-inner">
           <div className="footer-left">
-            <img src="/media/transparent circular logo.png" alt="Ramsbottom's" className="footer-logo" />
+            <img src="/media/brand/logo-circle.webp" alt="Ramsbottom's" className="footer-logo" />
             <span>© {new Date().getFullYear()} Ramsbottom's Pub</span>
           </div>
           <div className="footer-links">
