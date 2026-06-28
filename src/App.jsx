@@ -197,6 +197,8 @@ function App() {
   useGlobalReveal()
 
   const [lightbox, setLightbox] = useState(null)
+  const [teamExpanded, setTeamExpanded] = useState(false)
+  const [expandedGalleries, setExpandedGalleries] = useState({})
   const activeCollection = lightbox !== null ? galleryCollections[lightbox.collectionIndex] : null
   const activeImage = activeCollection?.images[lightbox.imageIndex]
   const showPreviousImage = (e) => {
@@ -212,6 +214,12 @@ function App() {
       const images = galleryCollections[collectionIndex].images
       return { collectionIndex, imageIndex: (imageIndex + 1) % images.length }
     })
+  }
+  const toggleGallery = (collectionIndex) => {
+    setExpandedGalleries((current) => ({
+      ...current,
+      [collectionIndex]: !current[collectionIndex],
+    }))
   }
 
   const [form, setForm] = useState({ name: '', email: '', enquiryType: '', message: '' })
@@ -327,11 +335,39 @@ function App() {
             <p className="section-subtitle reveal reveal-delay-2">The legends who keep the pints flowing and the craic mighty</p>
           </div>
         </div>
-        <div className="team-row-top">
-          {teamMembers.slice(0, 3).map((m, i) => (
-            <div key={m.name} className={`team-card reveal reveal-delay-${i + 1}`}>
+        <div className="team-desktop-grid">
+          <div className="team-row-top">
+            {teamMembers.slice(0, 3).map((m, i) => (
+              <div key={m.name} className={`team-card reveal reveal-delay-${i + 1}`}>
+                <div className="team-card-image-wrapper">
+                  <img src={m.image} alt={m.name} className="team-card-image" loading="lazy" decoding="async" />
+                </div>
+                <div className="team-card-info">
+                  <h3 className="team-card-name">{m.name}</h3>
+                  <span className="team-card-nickname">"{m.nickname}"</span>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="team-row-bottom">
+            {teamMembers.slice(3).map((m, i) => (
+              <div key={m.name} className={`team-card reveal reveal-delay-${i + 1}`}>
+                <div className="team-card-image-wrapper">
+                  <img src={m.image} alt={m.name} className="team-card-image" loading="lazy" decoding="async" />
+                </div>
+                <div className="team-card-info">
+                  <h3 className="team-card-name">{m.name}</h3>
+                  <span className="team-card-nickname">"{m.nickname}"</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className={`team-mobile-rail${teamExpanded ? ' expanded' : ''}`}>
+          {teamMembers.map((m, i) => (
+            <div key={m.name} className={`team-card${i >= 3 ? ' mobile-hidden' : ''} reveal reveal-delay-${(i % 5) + 1}`}>
               <div className="team-card-image-wrapper">
-                <img src={m.image} alt={m.name} className="team-card-image" loading="lazy" />
+                <img src={m.image} alt={m.name} className="team-card-image" loading="lazy" decoding="async" />
               </div>
               <div className="team-card-info">
                 <h3 className="team-card-name">{m.name}</h3>
@@ -340,19 +376,9 @@ function App() {
             </div>
           ))}
         </div>
-        <div className="team-row-bottom">
-          {teamMembers.slice(3).map((m, i) => (
-            <div key={m.name} className={`team-card reveal reveal-delay-${i + 1}`}>
-              <div className="team-card-image-wrapper">
-                <img src={m.image} alt={m.name} className="team-card-image" loading="lazy" />
-              </div>
-              <div className="team-card-info">
-                <h3 className="team-card-name">{m.name}</h3>
-                <span className="team-card-nickname">"{m.nickname}"</span>
-              </div>
-            </div>
-          ))}
-        </div>
+        <button type="button" className="mobile-reveal-btn" onClick={() => setTeamExpanded((open) => !open)}>
+          {teamExpanded ? 'Show fewer' : 'Meet the full team'}
+        </button>
       </section>
 
       {/* ── GALLERY ── */}
@@ -366,7 +392,11 @@ function App() {
         </div>
         <div className="gallery-collections">
           {galleryCollections.map((collection, collectionIndex) => (
-            <section key={collection.title} className="gallery-collection" aria-labelledby={`gallery-${collectionIndex}`}>
+            <section
+              key={collection.title}
+              className={`gallery-collection${expandedGalleries[collectionIndex] ? ' expanded' : ''}`}
+              aria-labelledby={`gallery-${collectionIndex}`}
+            >
               <div className="gallery-collection-header reveal">
                 <div>
                   <h3 id={`gallery-${collectionIndex}`}>{collection.title}</h3>
@@ -379,7 +409,7 @@ function App() {
                   <button
                     key={src}
                     type="button"
-                    className={`gallery-item reveal reveal-delay-${(imageIndex % 5) + 1}`}
+                    className={`gallery-item${imageIndex >= 4 ? ' mobile-hidden' : ''} reveal reveal-delay-${(imageIndex % 5) + 1}`}
                     onClick={() => setLightbox({ collectionIndex, imageIndex })}
                     aria-label={`Open ${collection.title} photo ${imageIndex + 1}`}
                   >
@@ -392,6 +422,9 @@ function App() {
                   </button>
                 ))}
               </div>
+              <button type="button" className="mobile-reveal-btn" onClick={() => toggleGallery(collectionIndex)}>
+                {expandedGalleries[collectionIndex] ? 'Show fewer' : `View all ${collection.images.length} photos`}
+              </button>
             </section>
           ))}
         </div>
@@ -416,7 +449,14 @@ function App() {
           </div>
           <div className="laois-grid">
             {laoisAttractions.map((item, i) => (
-              <a key={item.name} href={item.url} target="_blank" rel="noopener noreferrer" className={`laois-card reveal reveal-delay-${(i % 5) + 1}`}>
+              <a
+                key={item.name}
+                href={item.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                title={item.description}
+                className={`laois-card reveal reveal-delay-${(i % 5) + 1}`}
+              >
                 <div className="laois-card-icon">{item.icon}</div>
                 <div className="laois-card-body">
                   <h3 className="laois-card-name">{item.name}</h3>
