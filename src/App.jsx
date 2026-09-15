@@ -232,28 +232,22 @@ function App() {
     setSending(true)
     setSendError(false)
     try {
-      const res = await fetch('https://api.web3forms.com/submit', {
+      const res = await fetch('https://aok-website.onrender.com/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          access_key: '3b9fb2fe-1b41-40cf-83bf-9068779a6b36',
-          subject: `Ramsbottom's Website — ${form.enquiryType || 'General Enquiry'}`,
-          from_name: form.name,
-          replyto: form.email,
           name: form.name,
           email: form.email,
-          enquiry_type: form.enquiryType,
+          subject: form.enquiryType || 'General Enquiries',
           message: form.message,
+          site: 'ramsbottom',
         }),
       })
       const data = await res.json()
-      if (data.success) {
-        setSubmitted(true)
-        setTimeout(() => setSubmitted(false), 4000)
-        setForm({ name: '', email: '', enquiryType: '', message: '' })
-      } else {
-        setSendError(true)
-      }
+      if (!res.ok) throw new Error(data.message)
+      setSubmitted(true)
+      setTimeout(() => setSubmitted(false), 4000)
+      setForm({ name: '', email: '', enquiryType: '', message: '' })
     } catch {
       setSendError(true)
     } finally {
