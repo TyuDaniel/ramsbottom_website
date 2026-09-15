@@ -22,7 +22,6 @@ const teamMembers = [
   { name: 'Jack', nickname: 'II Commandiatore', image: '/media/team/jack.webp' },
   { name: 'Ann', nickname: 'Her Grace', image: '/media/team/ann.webp' },
   { name: 'Billy', nickname: 'Mixmaster General', image: '/media/team/billy.webp' },
-  { name: 'Noel', nickname: 'Slick Hips', image: '/media/team/noel.webp' },
   { name: 'Damien', nickname: 'Swiss Army Knife', image: '/media/team/damien.webp' },
   { name: 'Phillip', nickname: 'The Don', image: '/media/team/philip.webp' },
   { name: 'Aaron', nickname: 'The Future', image: '/media/team/aaron.webp' },
